@@ -8,6 +8,9 @@ app.use(cors());
 
 // Define Routes
 app.use("/user",userRoutes);
+app.use("/",(req,res)=>{
+    res.send("Hello, Welcome to takeuforward - CodeLab");
+})
 
 // Start the server
 const PORT = process.env.PORT || 3000;

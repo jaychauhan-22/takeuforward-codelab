@@ -1,23 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import SubmissionPage from './SubmissionPageComponents/SubmissionPage';
 
+const fetchUserDetail = async()=>{
+  console.log(process.env.REACT_APP_BACKEND_URL);
+    const url = `${process.env.REACT_APP_BACKEND_URL}/user/select`;
+    console.log(url);
+    const apicall = await fetch(url);
+    const response = await apicall.json();
+    if(response){
+      console.log(response);
+    }
+    console.log("Called");
+}
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <SubmissionPage/>
+      <button onClick={fetchUserDetail}>fetch Details K </button>
+
     </div>
   );
 }
