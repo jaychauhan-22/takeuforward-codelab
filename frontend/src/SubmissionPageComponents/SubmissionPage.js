@@ -2,8 +2,7 @@
 import React, { useState } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import '../App.css'; // Import CSS file for styling
-import Navbar from './Navbar';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const SubmissionPage = () => {
     const navigate = useNavigate();
@@ -15,8 +14,7 @@ const SubmissionPage = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(sourceCode);
-        // const url = `${process.env.REACT_APP_BACKEND_URL}/user/insert`;
-        const url = "http://localhost:3000/user/insert";
+        const url = `${process.env.REACT_APP_BACKEND_URL}/user/insert`;
         console.log(url);
         const newDate = new Date();
         let timestamp = newDate.getDate()+"/"+ (newDate.getMonth()+1) +"/"+newDate.getFullYear()+" ";
@@ -37,13 +35,6 @@ const SubmissionPage = () => {
             navigate("/submissions")
         }
 
-    };
-    const handleKeyPress = (event) => {
-        // If "Enter" key is pressed (keyCode 13), append a newline character to the source code
-        console.log("Hello");
-        if (event.keyCode === 13) {
-            setSourceCode(prevSourceCode => prevSourceCode + '\n');
-        }
     };
 
     return (
@@ -82,7 +73,6 @@ const SubmissionPage = () => {
                             theme="vs-dark" // Set the editor theme
                             value={sourceCode}
                             onChange={setSourceCode}
-                            onKeyPress={handleKeyPress}
                             width="100%"
                             height="500px"
                             options={{
