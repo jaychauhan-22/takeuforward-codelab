@@ -6,6 +6,9 @@ Welcome to the TakeYouForward Code Lab repository! This repository serves as a c
 
 This project is developed as a part of the hiring task for a full-stack SDE intern position at TakeYouForward. The goal of the project is to create a web application that facilitates the submission and display of code snippets. The application allows users to submit their code snippets along with their preferred code language, standard input, and username. It also presents all submitted entries in a tabular format, showcasing relevant details such as username, code language, standard input, and timestamp of submission.
 
+## Details of the Task:
+[Live Demo](https://docs.google.com/document/d/1SjJ109P7sly6YfanG59Fmpbo5bpC9OLKp4ckgyYWfWc/edit#heading=h.l4kpdxm0snxv)
+
 ## Features
 
 - Construct a form to gather information such as username, preferred code language, standard input, and source code.
