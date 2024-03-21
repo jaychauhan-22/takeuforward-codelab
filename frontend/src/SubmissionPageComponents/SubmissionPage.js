@@ -3,37 +3,51 @@ import React, { useState } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import '../App.css'; // Import CSS file for styling
 import Navbar from './Navbar';
-import { stdin } from 'process';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SubmissionPage = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [codeLanguage, setCodeLanguage] = useState('');
     const [standardInput, setStandardInput] = useState('');
     const [sourceCode, setSourceCode] = useState('');
-
+    const handleRun = ()=>{alert("hello")}
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const url = `${process.env.REACT_APP_BACKEND_URL}/user/insert`;
-        // const url = "http://localhost:3000/user/insert";
+        console.log(sourceCode);
+        // const url = `${process.env.REACT_APP_BACKEND_URL}/user/insert`;
+        const url = "http://localhost:3000/user/insert";
         console.log(url);
+        const newDate = new Date();
+        let timestamp = newDate.getDate()+"/"+ (newDate.getMonth()+1) +"/"+newDate.getFullYear()+" ";
+        timestamp += newDate.getHours()+":";
+        timestamp += newDate.getMinutes()+":";
+        timestamp += newDate.getSeconds();
+        console.log(timestamp);
         let result = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ "username": username, "code_language": codeLanguage, "stdin": standardInput, "sourcecode": sourceCode })
+            body: JSON.stringify({ "username": username, "code_language": codeLanguage, "stdin": standardInput, "sourcecode": sourceCode,"timestamp":timestamp })
         })
         result = await result.json();
         console.log(result);
         if (result) {
-
+            navigate("/submissions")
         }
 
+    };
+    const handleKeyPress = (event) => {
+        // If "Enter" key is pressed (keyCode 13), append a newline character to the source code
+        console.log("Hello");
+        if (event.keyCode === 13) {
+            setSourceCode(prevSourceCode => prevSourceCode + '\n');
+        }
     };
 
     return (
         <>
-            <Navbar />
             <div className="submission-page">
                 <h2>Submission Page</h2>
                 <form onSubmit={handleSubmit}>
@@ -64,16 +78,17 @@ const SubmissionPage = () => {
                     <div className="form-group">
                         <label>Source Code:</label>
                         <MonacoEditor
-                            language="javascript" // Set the language mode to JavaScript
+                            language={codeLanguage} // Set the language mode to JavaScript
                             theme="vs-dark" // Set the editor theme
                             value={sourceCode}
                             onChange={setSourceCode}
+                            onKeyPress={handleKeyPress}
                             width="100%"
                             height="500px"
                             options={{
                                 selectOnLineNumbers: true,
                                 fontSize: 14,
-                                suggestOnTriggerCharacters: true, // Enable suggestions on typing characters like '.' or '('
+                                suggestOnTriggerCharacters: true, 
                                 quickSuggestions: true, // Show quick suggestions as you type
                                 wordBasedSuggestions: true, // Use word-based suggestions
                                 suggestSelection: 'first', // Preselect the first suggestion
@@ -89,7 +104,9 @@ const SubmissionPage = () => {
                             required
                         />
                     </div>
-                    <button type="submit" className="submit-button">Submit</button>
+                    <input type='button' onClick={handleRun} className="submit-button" style={{marginRight:10,backgroundColor:'grey'}} value={"Run Code"}/>
+                    <button type="submit" className="submit-button">Submit Code</button>
+                    
                 </form>
             </div>
         </>
